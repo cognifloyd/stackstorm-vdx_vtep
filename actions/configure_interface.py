@@ -17,6 +17,7 @@ import iptools
 import pynos.device
 from st2actions.runners.pythonrunner import Action
 
+
 class ConfigureInterface(Action):
     """
        Implements the logic to configure interface
@@ -27,7 +28,7 @@ class ConfigureInterface(Action):
     def __init__(self, config=None):
         super(ConfigureInterface, self).__init__(config=config)
 
-    def run(self, host=None, mgmt_ip=None, username=None, password=None, intf_name=None, \
+    def run(self, host=None, mgmt_ip=None, username=None, password=None, intf_name=None,
             intf_ip=None, intf_type=None, rbridge_id=None):
         """Run helper methods to implement the desired state.
         """
@@ -55,7 +56,6 @@ class ConfigureInterface(Action):
         if rbridge_id is None:
             rbridge_id = self.config['rbridge_id1']
 
-
         conn = (host, '22')
         validation_conn = (mgmt_ip, '22')
         auth = (username, password)
@@ -63,23 +63,22 @@ class ConfigureInterface(Action):
         changes = {}
         with pynos.device.Device(conn=conn, auth=auth) as device:
             validation_device = pynos.device.Device(conn=validation_conn, auth=auth)
-            changes['pre_requisites'] = self._check_requirements(validation_device, \
+            changes['pre_requisites'] = self._check_requirements(validation_device,
                                             intf_type, intf_name, intf_ip, rbridge_id)
             changes['conf_intf'] = False
             if changes['pre_requisites']:
-                changes['conf_intf'] = self._configure_interface(device, \
+                changes['conf_intf'] = self._configure_interface(device,
                                             intf_type, intf_name, intf_ip, rbridge_id)
             else:
                 self.logger.info(
                     'Pre-requisites validation failed for interface configuration')
             if not changes['conf_intf']:
-                self.logger.info(
-                    'Interface %s %s configuration Failed' %(intf_type, intf_name))
+                self.logger.info('Interface %s %s configuration Failed' % (intf_type, intf_name))
                 exit(1)
             else:
                 self.logger.info(
-                    'closing connection to %s after configuring interface %s %s successfully!' \
-                    %(host, intf_type, intf_name))
+                    'closing connection to %s after configuring interface %s %s successfully!'
+                    % (host, intf_type, intf_name))
                 return changes
 
     def _check_requirements(self, device, intf_type, name, ip, rbridge_id):
@@ -96,7 +95,8 @@ class ConfigureInterface(Action):
         output = device.interface.interfaces
         is_interface_present = False
         for each_int in output:
-            if each_int['interface-type'] == str(intf_type) and each_int['interface-name'] == str(name):
+            if each_int['interface-type'] == str(intf_type) and \
+               each_int['interface-name'] == str(name):
                 is_interface_present = True
                 break
         if is_interface_present:
@@ -116,9 +116,8 @@ class ConfigureInterface(Action):
                                         rbridge_id=rbridge_id)
             return True
         except RuntimeError as e:
-            self.logger.error(
-                'Configuring IP for interface %s %s Failed with Exception: %s' \
-                % (e, intf_type, name))
+            self.logger.error('Configuring IP for interface %s %s Failed with Exception: %s'
+                              % (e, intf_type, name))
             return False
 
     def _set_interface_active(self, device, intf_type, name, rbridge_id):

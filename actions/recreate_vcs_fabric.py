@@ -19,6 +19,7 @@ import pynos.device
 from netmiko import ConnectHandler
 from st2actions.runners.pythonrunner import Action
 
+
 class ConfigureVcs(Action):
     """
        Implements the logic to VCS Fabric Creation
@@ -52,7 +53,6 @@ class ConfigureVcs(Action):
         conn = (host, '22')
         auth = (str(username), str(password))
         changes = {}
-        
         dev = pynos.device.Device(conn=conn, auth=auth)
 
         changes['pre_requisites'] = self._check_requirements(dev, vcs_id, rbridge_id)
@@ -79,11 +79,9 @@ class ConfigureVcs(Action):
             raise ValueError(' Rbridge ID is Invalid. Not in <1-239> range')
         return True
 
-
     def _configure_vcs(self, vcs_id, rb_id, host, auth):
         """VCS Fabric Configuration
         """
-        #
         self.logger.info("Creating VCS Fabric on the device: %r with vcsId:%r and rbridgeId: %r",
                          host, vcs_id, rb_id)
         cmd = "vcs vcsid %s set-rbridge-id %s", vcs_id, rb_id
@@ -121,9 +119,7 @@ class ConfigureVcs(Action):
                 net_connect.disconnect()
 
     def _if_device_reboot(self, host):
-
-        #Logic to check if device has rebooted.
-
+        # Logic to check if device has rebooted.
         self.logger.info("Checking if the device is rebooted after VCS command execution")
         result = 0
         t_elapsed = 1

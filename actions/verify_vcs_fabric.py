@@ -16,6 +16,7 @@ import logging
 import pynos.device
 from st2actions.runners.pythonrunner import Action
 
+
 class VerifyVcs(Action):
     """
        Implements the logic to verify VCS Fabric
@@ -80,7 +81,6 @@ class VerifyVcs(Action):
 
         return True
 
-
     def _verify_vcs(self, device, vcs_id, rbridge_ids, nodes):
         """VCS Fabric Varification.
         """
@@ -124,7 +124,6 @@ class VerifyVcs(Action):
                 result = True
                 break
         return result
-
 
     def _verify_vcsToalNoOfNodes(self, nodes, output):
         result = False

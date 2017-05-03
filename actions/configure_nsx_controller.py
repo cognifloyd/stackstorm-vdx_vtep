@@ -16,6 +16,7 @@ from st2actions.runners.pythonrunner import Action
 import pynos.device
 import iptools
 
+
 class ConfigureNsxController(Action):
     """
        Implements the logic to configure NSX controller in VCS fabric.
@@ -56,9 +57,10 @@ class ConfigureNsxController(Action):
         with pynos.device.Device(conn=conn, auth=auth) as device:
             changes['pre_requisites'] = self._check_requirements(device, nsx_cnt_ip)
             if changes['pre_requisites']:
-                changes['configure_nsxcontroller'] = self._configure_nsx_controller\
-                                                            (device, nsx_cnt_name, nsx_cnt_ip,
-                                                             nsx_cnt_port)
+                changes['configure_nsxcontroller'] = self._configure_nsx_controller(device,
+                                                                                    nsx_cnt_name,
+                                                                                    nsx_cnt_ip,
+                                                                                    nsx_cnt_port)
             else:
                 changes['configure_nsxcontroller'] = False
                 self.logger.info(

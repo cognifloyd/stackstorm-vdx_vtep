@@ -15,6 +15,7 @@
 import re
 from st2actions.runners.pythonrunner import Action
 
+
 class PublishConfigs(Action):
     def __init__(self, config=None):
         super(PublishConfigs, self).__init__(config=config)

@@ -16,6 +16,7 @@ import pynos.device
 import pynos.utilities
 from st2actions.runners.pythonrunner import Action
 
+
 class ConfigureVxlanGateway(Action):
     """
        Implements the logic to set VXLAN Overlay Gateway in VCS fabric.
@@ -49,7 +50,6 @@ class ConfigureVxlanGateway(Action):
         if rbridge_ids is None:
             rbridge_ids = self.config['rbridge_id1']
 
-
         if intf_name is None:
             intf_name = self.config['intf_name']
 
@@ -59,7 +59,6 @@ class ConfigureVxlanGateway(Action):
         conn = (host, '22')
         auth = (username, password)
 
-        #self.setup_connection(host=host, user=username, passwd=password)
         changes = {}
 
         with pynos.device.Device(conn=conn, auth=auth) as dev:
@@ -109,7 +108,8 @@ class ConfigureVxlanGateway(Action):
         # Logic to check if loopback interface is precreated and active
         is_loopback_interface_present = False
         for each_int in output:
-            if each_int['interface-type'] == 'loopback' and each_int['interface-name'] == str(intf_name):
+            if each_int['interface-type'] == 'loopback' and \
+               each_int['interface-name'] == str(intf_name):
                 is_loopback_interface_present = True
                 if each_int['interface-state'] == 'down':
                     raise ValueError("Loopback interface:%s state is down" % intf_name)

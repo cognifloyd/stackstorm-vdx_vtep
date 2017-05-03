@@ -1,4 +1,4 @@
-    # Copyright 2017 Great Software Laboratory Pvt. Ltd.
+# Copyright 2017 Great Software Laboratory Pvt. Ltd.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -16,6 +16,7 @@ import re
 from st2actions.runners.pythonrunner import Action
 import pynos.device
 
+
 class CreateSwitchPort(Action):
     """
        Implements the logic to create switch-port on an interface on VDX Switches .
@@ -28,8 +29,8 @@ class CreateSwitchPort(Action):
     def __init__(self, config=None):
         super(CreateSwitchPort, self).__init__(config=config)
 
-    def run(self, host=None, username=None, password=None, intf_type=None, \
-        vlan=None, switch_ports=None):
+    def run(self, host=None, username=None, password=None, intf_type=None,
+            vlan=None, switch_ports=None):
         """Run helper methods to implement the desired state.
         """
         if host is None:
@@ -95,25 +96,28 @@ class CreateSwitchPort(Action):
     def _create_switchport(self, device, intf_type, intf_name, vlan):
         """ Configuring Switch port trunk allowed vlan add on the interface with the vlan."""
         try:
-            #If port is a port-profile-port then disable it and enable switchport
+            # If port is a port-profile-port then disable it and enable switchport
             if device.interface.port_profile_port(inter_type=intf_type, inter=intf_name):
-                device.interface.port_profile_port(inter_type=intf_type, inter=intf_name, enable=False)
+                device.interface.port_profile_port(inter_type=intf_type, inter=intf_name,
+                enable=False)
 
-            #Logic to set interface mode trunk and add allowed vlans.
+            # Logic to set interface mode trunk and add allowed vlans.
             device.interface.enable_switchport(inter_type=intf_type, inter=intf_name)
             device.interface.switchport(int_type=intf_type, name=intf_name)
             device.interface.trunk_mode(int_type=intf_type, name=intf_name, mode='trunk')
             device.interface.trunk_allowed_vlan(int_type=intf_type, name=intf_name, action='all')
 
         except RuntimeError as e:
-            self.logger.error("Configuring interface as a switchport failed with error:%s" %e)
+            self.logger.error("Configuring interface as a switchport failed with error:%s" % e)
 
         return True
 
     def _tag_native_vlan(self, device, intf_type, intf_name):
         try:
-            device.interface.tag_native_vlan(int_type='tengigabitethernet', name=intf_name, enabled=True)
-            device.interface.tag_native_vlan(int_type='tengigabitethernet', name=intf_name, enabled=False)
+            device.interface.tag_native_vlan(int_type='tengigabitethernet', name=intf_name,
+                                             enabled=True)
+            device.interface.tag_native_vlan(int_type='tengigabitethernet', name=intf_name,
+                                             enabled=False)
         except ValueError:
             self.logger.info("Configuring Switch port trunk failed")
         return True

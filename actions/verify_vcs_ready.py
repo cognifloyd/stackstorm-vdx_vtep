@@ -58,7 +58,6 @@ class VerifyVcsReady(Action):
             self.logger.info('VCS Fabric is not ready with expected nodes.')
             exit(1)
 
-
     def _verify_vcs_ready(self, nodes, conn, auth):
         """Waits till VCS Fabric formation is completed.
         """

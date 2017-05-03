@@ -19,6 +19,7 @@ from netmiko import ConnectHandler
 import pynos.device
 from st2actions.runners.pythonrunner import Action
 
+
 class ConfigureVcs(Action):
     """
        Implements the logic to VCS Fabric Creation
@@ -127,9 +128,7 @@ class ConfigureVcs(Action):
                 net_connect.disconnect()
 
     def _if_device_reboot(self, host):
-
-        #Logic to check if device has rebooted.
-
+        # Logic to check if device has rebooted.
         self.logger.info("Checking if the device is rebooted after VCS command execution")
         result = 0
         t_elapsed = 1

@@ -16,6 +16,7 @@ import logging
 from netmiko import ConnectHandler
 from st2actions.runners.pythonrunner import Action
 
+
 class getSwitchCertificate(Action):
     """
        Implements the logic to get the nsx-controller client certficate
@@ -60,8 +61,6 @@ class getSwitchCertificate(Action):
         result = self._execute_cmd(host, auth, cmd)
         cert = result['show nsx-controller client-cert']
         print cert
-        #certificate = '\n'.join(cert)
-        #print certificate
         if 'BEGIN CERTIFICATE' not in cert:
             return False
         return cert

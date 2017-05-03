@@ -17,6 +17,7 @@ import pynos.device
 import pynos.utilities
 from st2actions.runners.pythonrunner import Action
 
+
 class CreateVlan(Action):
     def __init__(self, config=None):
         super(CreateVlan, self).__init__(config=config)
@@ -116,7 +117,7 @@ class CreateVlan(Action):
         sysvlans = device.interface.vlans
         is_vlan_interface_present = False
 
-        #The below code is to verify the given vlan is already present in VDX switch
+        # The below code is to verify the given vlan is already present in VDX switch
         vlan_list = []
         for vlan in vlan_id:
             for svlan in sysvlans:
@@ -133,7 +134,7 @@ class CreateVlan(Action):
                     if vlan_len == 1:
                         break
 
-            #The below code is for creating single vlan.
+            # The below code is for creating single vlan.
             if not is_vlan_interface_present and vlan_len == 1:
                 self.logger.info('configuring vlan %s on %s', vlan, host)
                 error = device.interface.add_vlan_int(str(vlan))

@@ -15,6 +15,7 @@
 from st2actions.runners.pythonrunner import Action
 import pynos.device
 
+
 class CreateVe(Action):
     def __init__(self, config=None):
         super(CreateVe, self).__init__(config=config)
@@ -60,7 +61,7 @@ class CreateVe(Action):
             device.interface.add_vlan_int(ve_name)
             output = device.interface.ip_address(int_type='ve', name=ve_name,
                                                  ip_addr=ip_address, rbridge_id=rbridge_id)
-            #device.interface.create_ve(enable=True, ve_name=ve_name, rbridge_id=rbridge_id)
+            # device.interface.create_ve(enable=True, ve_name=ve_name, rbridge_id=rbridge_id)
         except (ValueError, KeyError):
             self.logger.info('Invalid Input values while creating to Ve')
 

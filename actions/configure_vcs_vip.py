@@ -16,6 +16,7 @@ import pynos.device
 from st2actions.runners.pythonrunner import Action
 from ipaddress import ip_interface
 
+
 class ConfigureVcsVip(Action):
     """
            Implements the logic to set Virtual IP in VCS Fabric.
@@ -63,12 +64,9 @@ class ConfigureVcsVip(Action):
                     host)
             return changes
 
-
     def _check_requirements(self, device, vip):
         """ Verify if the Virtual IP already exists
         """
-
-
         ipaddress = ip_interface(unicode(vip))
         vips = device.vcs.vcs_vip(get=True)
 

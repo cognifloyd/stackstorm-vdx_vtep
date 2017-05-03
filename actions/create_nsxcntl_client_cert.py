@@ -16,6 +16,7 @@ import logging
 from netmiko import ConnectHandler
 from st2actions.runners.pythonrunner import Action
 
+
 class createCertificate(Action):
     """
        Implements the logic to generate the nsx-controller client certficate

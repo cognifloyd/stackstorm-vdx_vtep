@@ -16,6 +16,7 @@ import re
 from st2actions.runners.pythonrunner import Action
 import pynos.device
 
+
 class ConfigureVcenter(Action):
     """
     Implements the logic to add established Vcenter on the device.
@@ -80,7 +81,7 @@ class ConfigureVcenter(Action):
         '''
         Verify if vcenter pre-exists
         '''
-        #Logic to check if url is in the format: http(s)://<>
+        # Logic to check if url is in the format: http(s)://<>
         pattern = re.compile(
             r'^(?:http)s?://'
             r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'
@@ -93,7 +94,7 @@ class ConfigureVcenter(Action):
             self.logger.info('Invalid URL')
             return False
 
-        #Logic to check vcenter already exists.
+        # Logic to check vcenter already exists.
         vc_list = device.vcenter.get_vcenter()
         for vc in vc_list:
             if vc['url'] == str(url):
@@ -116,7 +117,7 @@ class ConfigureVcenter(Action):
                                        password=vcenter_pass)
             return True
         except RuntimeError as e:
-            self.logger.error('Vcenter configuration Failed with Exception: %s' %e)
+            self.logger.error('Vcenter configuration Failed with Exception: %s' % e)
             return False
 
     def _activate_vcenter(self, device, vcenter_name):

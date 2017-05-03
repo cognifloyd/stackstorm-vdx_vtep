@@ -15,6 +15,8 @@
 import logging
 import pynos.device
 from st2actions.runners.pythonrunner import Action
+
+
 class getPrincipaldevice(Action):
     """
     Implements the logic to get the principal rbridge device.
@@ -22,6 +24,7 @@ class getPrincipaldevice(Action):
     def __init__(self, config=None):
         super(getPrincipaldevice, self).__init__(config=config)
         self.logger = logging.getLogger(__name__)
+
     def run(self, host, username, password):
         """
         Run helper methods to implement the desired state.
