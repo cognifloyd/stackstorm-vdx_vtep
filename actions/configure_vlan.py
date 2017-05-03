@@ -166,7 +166,7 @@ class CreateVlan(Action):
                     raise ValueError(msg)
 
         return True
-        
+
     def _check_int_description(self, intf_description):
         """
         Check for valid interface description
