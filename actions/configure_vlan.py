@@ -50,7 +50,7 @@ class CreateVlan(Action):
             valid_desc = True
             if intf_desc:
                 # if description is passed we validate that the length is good.
-                valid_desc = self.check_int_description(intf_description=intf_desc)
+                valid_desc = self._check_int_description(intf_description=intf_desc)
             if vlan_list and valid_desc:
                 changes['vm_vlan'] = self._configure_vlan(device, vlan_id=vlan_list,
                                                           intf_desc=intf_desc, host=host)
@@ -166,3 +166,17 @@ class CreateVlan(Action):
                     raise ValueError(msg)
 
         return True
+        
+    def _check_int_description(self, intf_description):
+        """
+        Check for valid interface description
+        """
+        err_code = len(intf_description)
+        if err_code < 1:
+            self.logger.info('Pls specify a valid description')
+            return False
+        elif err_code <= 63:
+            return True
+        else:
+            self.logger.info('Length of the description is more than the allowed size')
+            return False
