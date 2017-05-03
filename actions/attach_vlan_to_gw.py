@@ -18,6 +18,7 @@ import pynos.device
 import pynos.utilities
 from st2actions.runners.pythonrunner import Action
 
+
 class attachVlanToGw(Action):
     def __init__(self, config=None):
         Action.__init__(self, config=config)
@@ -88,11 +89,10 @@ class attachVlanToGw(Action):
                         self.logger.info('VLAN: %s is already attached to overlay gateway.', vlan)
                         return False
             else:
-                self.logger.info('Overlay gateway: %s not configured on the switch.', \
+                self.logger.info('Overlay gateway: %s not configured on the switch.',
                     overlay_gateway_name)
                 return False
         return True
-
 
     def _attach_vlan(self, host, auth, overlay_gateway_name, vlan):
         '''
