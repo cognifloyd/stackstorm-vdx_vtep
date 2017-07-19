@@ -28,7 +28,7 @@ class VerifyVcsReady(Action):
         super(VerifyVcsReady, self).__init__(config=config)
         self.logger = logging.getLogger(__name__)
 
-    def run(self, host, username, password, nodes):
+    def run(self, host=None, username=None, password=None, nodes=None):
         """Run helper methods to implement the desired state.
         """
         if host is None:
@@ -47,18 +47,20 @@ class VerifyVcsReady(Action):
 
         changes = {}
 
-        changes['verify_vcs_ready'] = False
-        changes['verify_vcs_ready'] = self._verify_vcs_ready(nodes, conn, auth)
-        if changes['verify_vcs_ready']:
-            self.logger.info('closing connection to %s after verifying if VCS Formation is \
+        with pynos.device.Device(conn=conn, auth=auth) as device:
+            changes['verify_vcs_ready'] = False
+            changes['verify_vcs_ready'] = self._verify_vcs_ready(device, nodes)
+            if changes['verify_vcs_ready']:
+                self.logger.info('closing connection to %s after verifying if VCS Formation is \
                              complete.', host)
-            return changes
-        else:
-            self.logger.info('Total Nodes in VCS are not equal to the expected nodes: %s', nodes)
-            self.logger.info('VCS Fabric is not ready with expected nodes.')
-            exit(1)
+                return changes
+            else:
+                self.logger.info('Total Nodes in VCS are not equal to the expected nodes: \
+                                 %s', nodes)
+                self.logger.info('VCS Fabric is not ready with expected nodes.')
+                exit(1)
 
-    def _verify_vcs_ready(self, nodes, conn, auth):
+    def _verify_vcs_ready(self, device, nodes):
         """Waits till VCS Fabric formation is completed.
         """
         # Logic to check if VCS Fabric formation is ready and its online
@@ -66,7 +68,6 @@ class VerifyVcsReady(Action):
         ready = False
         for t in range(30):
             try:
-                device = pynos.device.Device(conn=conn, auth=auth)
                 output = device.vcs.vcs_nodes
 
                 if len(output) == int(nodes):
@@ -78,7 +79,7 @@ class VerifyVcsReady(Action):
                     self.logger.info('Trying Again after 30 sec')
                     time.sleep(30)
 
-            except Exception as e:
+            except RuntimeError as e:
                 self.logger.info('%s', e)
                 self.logger.info('Trying Again after 30 sec')
                 time.sleep(30)
