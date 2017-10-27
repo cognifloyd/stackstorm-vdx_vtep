@@ -17,7 +17,7 @@ import time
 import socket
 import pynos.device
 from netmiko import ConnectHandler
-from st2actions.runners.pythonrunner import Action
+from st2common.runners.base_action import Action
 
 
 class ConfigureVcs(Action):
