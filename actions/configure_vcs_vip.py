@@ -13,7 +13,7 @@
 # under the License.
 
 import pynos.device
-from st2actions.runners.pythonrunner import Action
+from st2common.runners.base_action import Action
 from ipaddress import ip_interface
 
 

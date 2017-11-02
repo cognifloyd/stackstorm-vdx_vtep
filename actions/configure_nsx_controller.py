@@ -12,7 +12,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-from st2actions.runners.pythonrunner import Action
+from st2common.runners.base_action import Action
 import pynos.device
 import iptools
 
