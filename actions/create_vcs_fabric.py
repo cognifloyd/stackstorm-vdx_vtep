@@ -155,5 +155,5 @@ class ConfigureVcs(Action):
 
             s.close()
             return response
-        except:
+        except Exception:
             return response
