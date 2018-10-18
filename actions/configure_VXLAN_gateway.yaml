@@ -1,7 +1,7 @@
 ---
 name: configure_VXLAN_gateway
 pack: vdx_vtep
-runner_type: run-python
+runner_type: python-script
 description: configure VXLAN gateway
 enabled: true
 entry_point: configure_VXLAN_gateway.py

@@ -1,7 +1,7 @@
 ---
 name: get_principal_node
 pack: vdx_vtep
-runner_type: run-python
+runner_type: python-script
 description: Get principal rbridge node
 enabled: true
 entry_point: get_principal_node.py

@@ -1,7 +1,7 @@
 ---
 name: configure_vcs_vip
 pack: vdx_vtep
-runner_type: run-python
+runner_type: python-script
 description: Configure VCS fabric virtual IP address
 enabled: true
 entry_point: configure_vcs_vip.py

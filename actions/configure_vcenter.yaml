@@ -1,7 +1,7 @@
 ---
 name: configure_vcenter
 pack: vdx_vtep
-runner_type: run-python
+runner_type: python-script
 description: configure vcenter
 enabled: true
 entry_point: configure_vcenter.py

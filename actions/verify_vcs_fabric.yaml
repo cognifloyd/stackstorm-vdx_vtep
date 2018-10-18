@@ -1,7 +1,7 @@
 ---
 name: verify_vcs_fabric
 pack: vdx_vtep
-runner_type: run-python
+runner_type: python-script
 description: verify vcs fabric.
 enabled: true
 entry_point: verify_vcs_fabric.py
